@@ -1,0 +1,10 @@
+[project]
+name = "manufacturing-quality-process-analytics"
+version = "0.1.0"
+description = "Manufacturing quality, OEE, SPC, and bottleneck analytics case study"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+

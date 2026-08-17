@@ -1,0 +1,7 @@
+line,machine,oee,defect_rate,unplanned_downtime_min,scrap_cost_inr,spc_breach_days,recommended_action,primary_defect_drivers
+Line_A,M13,0.8714746465311081,0.05115065550966868,19248.49,598755.79,0,Move to preventive maintenance and operator-standard-work review,"tool_age_hours, pressure_bar, humidity_pct"
+Line_C,M13,0.8460320899289837,0.07612766746784436,17753.78,808105.31,0,Move to preventive maintenance and operator-standard-work review,"tool_age_hours, pressure_bar, humidity_pct"
+Line_C,M04,0.8480330779651053,0.07536719625427751,17687.87,840750.56,0,Move to preventive maintenance and operator-standard-work review,"tool_age_hours, pressure_bar, humidity_pct"
+Line_C,M09,0.8523951464001527,0.07584631263989237,17246.49,821287.21,0,Move to preventive maintenance and operator-standard-work review,"tool_age_hours, pressure_bar, humidity_pct"
+Line_A,M09,0.8737380548557735,0.0501052043078992,18215.15,558753.51,0,Move to preventive maintenance and operator-standard-work review,"tool_age_hours, pressure_bar, humidity_pct"
+Line_A,M04,0.8754388233762737,0.050299155993357145,18061.45,555830.75,0,Move to preventive maintenance and operator-standard-work review,"tool_age_hours, pressure_bar, humidity_pct"

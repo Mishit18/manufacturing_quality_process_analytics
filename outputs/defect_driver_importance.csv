@@ -1,0 +1,10 @@
+feature,importance
+tool_age_hours,0.01807692307692301
+pressure_bar,0.014630769230769202
+humidity_pct,0.01207692307692303
+vibration_mm_s,0.01030769230769224
+ambient_temp_c,0.00866153846153841
+unplanned_downtime_min,0.001953846153846106
+operator_tenure_months,0.0007999999999999785
+target_cycle_time_sec,0.00012307692307689244
+actual_cycle_time_sec,-4.4408920985006264e-17

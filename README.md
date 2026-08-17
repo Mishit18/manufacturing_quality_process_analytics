@@ -13,6 +13,7 @@ The 52,000-row operations dataset is simulated to avoid confidential plant data,
 - Root-cause analytics using interpretable defect-driver modeling
 - Dashboard-ready CSV outputs and executive recommendation memo
 - Independent validation on a real, CC BY 4.0 industrial defect dataset
+- Class-level diagnostics, SHAP attribution, and explicitly modeled failure-priority scoring on the real dataset
 - Streamlit command center separating simulated operations KPIs from real-data model evidence
 
 ## Project Outputs
@@ -25,6 +26,7 @@ The 52,000-row operations dataset is simulated to avoid confidential plant data,
 | `outputs/bottleneck_rankings.csv` | Ranked bottlenecks using OEE, downtime, and defect losses |
 | `outputs/recommended_actions.csv` | Maintenance and root-cause recommendations |
 | `reports/executive_summary.md` | Interview-ready management summary |
+| `reports/real_data_validation.md` | Real-data-first metrics, SHAP evidence, failure priority, and claim boundaries |
 
 ## Run
 

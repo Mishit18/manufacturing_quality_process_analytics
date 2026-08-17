@@ -15,7 +15,7 @@ from manufacturing_quality import (
     fit_defect_model,
     identify_bottlenecks,
     recommend_actions,
-    run_steel_faults_benchmark,
+    run_steel_faults_evidence,
 )
 from manufacturing_quality.reporting import write_executive_summary
 
@@ -34,7 +34,7 @@ def main() -> None:
     importances, metrics = fit_defect_model(df)
     bottlenecks = identify_bottlenecks(oee)
     recommendations = recommend_actions(bottlenecks, spc, importances)
-    real_metrics, real_importance = run_steel_faults_benchmark()
+    real_metrics, real_importance, class_metrics, failure_priority, shap_importance = run_steel_faults_evidence()
 
     df.head(5000).to_csv(OUTPUTS / "manufacturing_sample.csv", index=False)
     oee.to_csv(OUTPUTS / "oee_by_line_machine.csv", index=False)
@@ -44,6 +44,9 @@ def main() -> None:
     recommendations.to_csv(OUTPUTS / "recommended_actions.csv", index=False)
     pd.DataFrame([real_metrics]).to_csv(OUTPUTS / "uci_steel_faults_metrics.csv", index=False)
     real_importance.to_csv(OUTPUTS / "uci_steel_faults_importance.csv", index=False)
+    class_metrics.to_csv(OUTPUTS / "uci_steel_faults_class_metrics.csv", index=False)
+    failure_priority.to_csv(OUTPUTS / "uci_steel_faults_failure_priority.csv", index=False)
+    shap_importance.to_csv(OUTPUTS / "uci_steel_faults_shap_importance.csv", index=False)
     write_executive_summary(
         REPORTS / "executive_summary.md",
         n_rows=len(df),
@@ -52,6 +55,23 @@ def main() -> None:
         importances=importances,
         metrics=metrics,
         recommendations=recommendations,
+    )
+    top_fault = failure_priority.iloc[0]
+    top_shap = ", ".join(shap_importance.head(5)["feature"].tolist())
+    (REPORTS / "real_data_validation.md").write_text(
+        f"# Real UCI Steel Faults Validation\n\n"
+        f"The primary external benchmark uses **{int(real_metrics['records']):,} real public records**, "
+        f"27 measured features, and {int(real_metrics['classes'])} fault classes.\n\n"
+        f"## Holdout Results\n\n"
+        f"- Accuracy: **{real_metrics['accuracy']:.3f}**\n"
+        f"- Balanced accuracy: **{real_metrics['balanced_accuracy']:.3f}**\n"
+        f"- Macro-F1: **{real_metrics['macro_f1']:.3f}**\n"
+        f"- Leading SHAP features: **{top_shap}**\n"
+        f"- Highest modeled review priority: **{top_fault['fault_type']}**, based on missed cases and an explicit severity assumption.\n\n"
+        "## Claim Boundary\n\n"
+        "The failure-priority score is a modeled review aid, not observed plant cost. "
+        "SPC and OEE outputs come from the separately labeled simulated operations scenario because the UCI data has no downtime or production-count fields.\n",
+        encoding="utf-8",
     )
     print(f"Built project artifacts under {OUTPUTS} and {REPORTS}")
     print(f"Defect model ROC-AUC={metrics['roc_auc']:.3f}, PR-AUC={metrics['pr_auc']:.3f}")

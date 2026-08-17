@@ -6,7 +6,10 @@ from manufacturing_quality import (
     identify_bottlenecks,
     recommend_actions,
     run_steel_faults_benchmark,
+    build_failure_priority,
 )
+
+import pandas as pd
 
 
 def test_dataset_has_expected_shape_and_columns():
@@ -45,3 +48,18 @@ def test_real_uci_benchmark_is_reproducible():
     assert metrics["accuracy"] > 0.70
     assert metrics["macro_f1"] > 0.60
     assert len(importance) == 27
+
+
+def test_failure_priority_is_explicitly_modeled():
+    class_metrics = pd.DataFrame(
+        {
+            "fault_type": ["k_scratch", "dirtiness"],
+            "precision": [0.8, 0.8],
+            "recall": [0.5, 0.5],
+            "f1_score": [0.62, 0.62],
+            "support": [100, 100],
+        }
+    )
+    priority = build_failure_priority(class_metrics)
+    assert priority.iloc[0]["fault_type"] == "k_scratch"
+    assert "modeled_failure_weight" in priority.columns

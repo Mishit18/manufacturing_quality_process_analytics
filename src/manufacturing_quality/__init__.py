@@ -8,7 +8,7 @@ from .analysis import (
     recommend_actions,
 )
 from .data_simulation import build_manufacturing_dataset
-from .real_benchmark import run_steel_faults_benchmark
+from .real_benchmark import build_failure_priority, run_steel_faults_benchmark, run_steel_faults_evidence
 
 __all__ = [
     "build_manufacturing_dataset",
@@ -18,4 +18,6 @@ __all__ = [
     "identify_bottlenecks",
     "recommend_actions",
     "run_steel_faults_benchmark",
+    "run_steel_faults_evidence",
+    "build_failure_priority",
 ]

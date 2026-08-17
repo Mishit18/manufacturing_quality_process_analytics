@@ -5,6 +5,7 @@ from manufacturing_quality import (
     fit_defect_model,
     identify_bottlenecks,
     recommend_actions,
+    run_steel_faults_benchmark,
 )
 
 
@@ -36,3 +37,11 @@ def test_model_and_recommendations_are_defensible():
     assert len(importances) >= 5
     assert len(recs) == 6
 
+
+def test_real_uci_benchmark_is_reproducible():
+    metrics, importance = run_steel_faults_benchmark()
+    assert metrics["records"] == 1_941
+    assert metrics["classes"] == 7
+    assert metrics["accuracy"] > 0.70
+    assert metrics["macro_f1"] > 0.60
+    assert len(importance) == 27

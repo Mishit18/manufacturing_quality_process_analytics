@@ -1,8 +1,8 @@
 __pycache__/
 .pytest_cache/
+.cache/
 .ipynb_checkpoints/
 .env
 .venv/
 venv/
 *.log
-

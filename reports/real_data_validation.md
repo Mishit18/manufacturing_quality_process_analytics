@@ -1,4 +1,14 @@
-# Real UCI Steel Faults Validation
+# Real Industrial Data Validation
+
+## MetroPT-3 Predictive-Maintenance Benchmark
+
+Analyzed **1,516,948 real operational sensor readings** from a metro-train air compressor and evaluated chronological anomaly monitoring against 4 company-reported air-leak events.
+
+- Detected failure events: **4/4**
+- Failure-window alert rate: **95.80%**
+- Normal-window alert rate: **6.86%**
+
+## UCI Steel Faults Classification
 
 The primary external benchmark uses **1,941 real public records**, 27 measured features, and 7 fault classes.
 

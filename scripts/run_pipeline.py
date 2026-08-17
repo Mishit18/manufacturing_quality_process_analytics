@@ -15,6 +15,7 @@ from manufacturing_quality import (
     fit_defect_model,
     identify_bottlenecks,
     recommend_actions,
+    run_metropt_benchmark,
     run_steel_faults_evidence,
 )
 from manufacturing_quality.reporting import write_executive_summary
@@ -35,6 +36,10 @@ def main() -> None:
     bottlenecks = identify_bottlenecks(oee)
     recommendations = recommend_actions(bottlenecks, spc, importances)
     real_metrics, real_importance, class_metrics, failure_priority, shap_importance = run_steel_faults_evidence()
+    metro_metrics, _ = run_metropt_benchmark(
+        output_dir=OUTPUTS,
+        cache_dir=ROOT / ".cache",
+    )
 
     df.head(5000).to_csv(OUTPUTS / "manufacturing_sample.csv", index=False)
     oee.to_csv(OUTPUTS / "oee_by_line_machine.csv", index=False)
@@ -59,7 +64,16 @@ def main() -> None:
     top_fault = failure_priority.iloc[0]
     top_shap = ", ".join(shap_importance.head(5)["feature"].tolist())
     (REPORTS / "real_data_validation.md").write_text(
-        f"# Real UCI Steel Faults Validation\n\n"
+        f"# Real Industrial Data Validation\n\n"
+        f"## MetroPT-3 Predictive-Maintenance Benchmark\n\n"
+        f"Analyzed **{int(metro_metrics['raw_records']):,} real operational sensor readings** "
+        f"from a metro-train air compressor and evaluated chronological anomaly monitoring "
+        f"against {int(metro_metrics['reported_failure_events'])} company-reported air-leak events.\n\n"
+        f"- Detected failure events: **{int(metro_metrics['detected_failure_events'])}/"
+        f"{int(metro_metrics['reported_failure_events'])}**\n"
+        f"- Failure-window alert rate: **{metro_metrics['failure_window_alert_rate']:.2%}**\n"
+        f"- Normal-window alert rate: **{metro_metrics['normal_window_alert_rate']:.2%}**\n\n"
+        f"## UCI Steel Faults Classification\n\n"
         f"The primary external benchmark uses **{int(real_metrics['records']):,} real public records**, "
         f"27 measured features, and {int(real_metrics['classes'])} fault classes.\n\n"
         f"## Holdout Results\n\n"
@@ -78,6 +92,12 @@ def main() -> None:
     print(
         "UCI Steel Faults benchmark "
         f"accuracy={real_metrics['accuracy']:.3f}, macro-F1={real_metrics['macro_f1']:.3f}"
+    )
+    print(
+        "MetroPT-3 benchmark "
+        f"events={int(metro_metrics['detected_failure_events'])}/"
+        f"{int(metro_metrics['reported_failure_events'])}, "
+        f"normal alert rate={metro_metrics['normal_window_alert_rate']:.2%}"
     )
 
 

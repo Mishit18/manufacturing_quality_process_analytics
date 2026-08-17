@@ -9,6 +9,7 @@ from .analysis import (
 )
 from .data_simulation import build_manufacturing_dataset
 from .real_benchmark import build_failure_priority, run_steel_faults_benchmark, run_steel_faults_evidence
+from .metropt_benchmark import run_metropt_benchmark
 
 __all__ = [
     "build_manufacturing_dataset",
@@ -20,4 +21,5 @@ __all__ = [
     "run_steel_faults_benchmark",
     "run_steel_faults_evidence",
     "build_failure_priority",
+    "run_metropt_benchmark",
 ]

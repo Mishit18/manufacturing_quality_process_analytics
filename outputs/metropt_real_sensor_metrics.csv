@@ -1,0 +1,2 @@
+raw_records,signals,ten_minute_windows,reported_failure_events,detected_failure_events,event_recall,failure_window_alert_rate,normal_window_alert_rate,threshold
+1516948.0,7.0,25521.0,4.0,4.0,1.0,0.958,0.06862235721993526,0.6554772367231938
